@@ -57,6 +57,7 @@ let currentMetric = "sessions";
 // ============================================================
 
 Papa.parse("data.csv", {
+  download: true,
   header: true,
   dynamicTyping: true,
   skipEmptyLines: true,
@@ -68,12 +69,19 @@ Papa.parse("data.csv", {
 
     // ── Once data is ready, run everything ──
     renderKPIs(allData);
+    console.log("KPIs rendered");
     drawBarChart(allData, "sessions");
+    console.log("Bar chart drawn");
     drawPieChart(allData);
+    console.log("Pie chart drawn");
     drawLineChart(allData);
+    console.log("Line chart drawn");
     buildTable(allData);
+    console.log("Table built");
     setupToggle();
+    console.log("Toggle setup");
     setupFilter();
+    console.log("Filter setup");
   },
 
   error: function (err) {
@@ -178,6 +186,7 @@ function drawBarChart(rows, metric) {
     if (!groups[row.source]) {
       groups[row.source] = 0;
     }
+
     groups[row.source] += row[metric];
   });
 
@@ -419,15 +428,31 @@ function drawLineChart(rows) {
 // ============================================================
 
 function setupToggle() {
+  const btnSessions = document.getElementById("btn-sessions");
+  const btnRevenue = document.getElementById("btn-revenue");
 
+  if (!btnSessions || !btnRevenue) {
+    console.warn("Toggle buttons not found: btn-sessions or btn-revenue missing.");
+    return;
+  }
 
-  // TODO]
-  document.getElementById("btn-sessions").addEventListener("click", ()=>{
+  btnSessions.addEventListener("click", () => {
     currentMetric = "sessions";
     drawBarChart(allData, currentMetric);
-    document.getElementById("bar-chart-title").textContentv= "Sessions by Traffic Source";
-    document.getElementById("btn-sessions").classList.add("active"); 
-  })
+    document.getElementById("bar-chart-title").textContent = "Sessions by Traffic Source";
+    btnSessions.classList.add("active");
+    btnRevenue.classList.remove("active");
+  });
+
+  btnRevenue.addEventListener("click", () => {
+    currentMetric = "revenue";
+    drawBarChart(allData, currentMetric);
+    document.getElementById("bar-chart-title").textContent = "Revenue by Traffic Source ($)";
+    btnRevenue.classList.add("active");
+    btnSessions.classList.remove("active");
+  });
+
+  btnSessions.classList.add("active");
 }
 
 
@@ -462,14 +487,14 @@ function buildTable(rows) {
  let tableHTML = "";
  rows.forEach(row => {
   tableHTML += '<tr>';
-  tableHTML += '<td>' + row.month + '<td>';
-  tableHTML += '<td>' + row.source + '<td>';
-  tableHTML += '<td>' + row.sessions.toLocaleString() + '<td>';
-  tableHTML += '<td>$' + row.revenue.toLocaleString() + '<td>';
-  tableHTML += '<td>' + row.bounceRate + '%<td>';
-  tableHTML += '<td>' + row.conversionRate + '%<td>';
-  tableHTML += '<td>' + row.pageviews.toLocaleString() + '<td>';
-  tableHTML += '<td>' + row.newVisitors.toLocaleString() + '<td>';
+  tableHTML += '<td>' + row.month + '</td>';
+  tableHTML += '<td>' + row.source + '</td>';
+  tableHTML += '<td>' + row.sessions.toLocaleString() + '</td>';
+  tableHTML += '<td>$' + row.revenue.toLocaleString() + '</td>';
+  tableHTML += '<td>' + row.bounceRate + '%</td>';
+  tableHTML += '<td>' + row.conversionRate + '%</td>';
+  tableHTML += '<td>' + row.pageviews.toLocaleString() + '</td>';
+  tableHTML += '<td>' + row.newVisitors.toLocaleString() + '</td>';
   tableHTML += '</tr>';
  });
  tablebody.innerHTML = tableHTML; 
@@ -488,4 +513,3 @@ function setupFilter() {
   }
  });
 }
-
