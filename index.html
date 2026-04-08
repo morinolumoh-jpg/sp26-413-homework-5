@@ -16,17 +16,16 @@
 <body>
 
 <div class="dashboard">
-
   <!-- ── HEADER ─────────────────────────────────────────── -->
   <header>
     <div class="header-left">
       <h1>📰 The Metro Report</h1>
       <p>Web Analytics Dashboard — Spring 2026</p>
-    </div>
-    <div class="header-right">
+    </div>    <div class="header-right">
       <!-- TASK 4: Your metric toggle buttons go here -->
-    </div>
-  </header>
+      <button id="btn-sessions">Sessions</button>
+      <button id="btn-revenue">Revenue</button>
+    </div>  </header>
 
 
   <!-- ── KPI CARDS ──────────────────────────────────────── -->
@@ -83,7 +82,7 @@
       <div class="chart-card-header">
         <h3 id="bar-chart-title">Sessions by Traffic Source</h3>
       </div>
-      <canvas id="barChart" height="140"></canvas>
+      <canvas id="barChart" width="400" height="140"></canvas>
     </div>
 
     <!-- TASK 3B: Pie / Doughnut Chart -->
@@ -91,7 +90,7 @@
       <div class="chart-card-header">
         <h3>Revenue Share by Source</h3>
       </div>
-      <canvas id="pieChart" height="220"></canvas>
+      <canvas id="pieChart" width="300" height="220"></canvas>
     </div>
 
   </div><!-- /chart-row -->
@@ -103,8 +102,13 @@
     <div class="chart-card-header">
       <h3>Monthly Sessions Trend by Source</h3>
     </div>
-    <canvas id="lineChart" height="100"></canvas>
+    <canvas id="lineChart" width="600" height="100"></canvas>
   </div>
+
+
+  <!--
+    TASK 4: Add the btnsessions and btnrevenue placeholder
+  -->
 
 
   <!-- ── DATA TABLE ─────────────────────────────────────── -->
@@ -116,6 +120,15 @@
     <div class="chart-card-header">
       <h3>All Traffic Data</h3>
       <!-- TASK 5B: Source filter dropdown goes here -->
+       <select id="sourceFilter" name="SourceFilter">
+         <option value="All">All Sources</option>
+         <option value="Organic">Organic</option>
+         <option value="Paid">Paid</option>
+         <option value="Social">Social</option>
+         <option value="Email">Email</option>
+         <option value="Referral">Referral</option>
+        </select>
+        
     </div>
     <div class="table-wrapper">
       <table id="dataTable">
@@ -146,4 +159,3 @@
 
 </body>
 </html>
-
