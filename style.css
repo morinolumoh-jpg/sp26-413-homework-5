@@ -7,7 +7,6 @@
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
-  padding: 0;
 }
 
 body {
@@ -233,4 +232,3 @@ tbody tr:last-child td {
 .source-filter:focus {
   border-color: #3b82f6;
 }
-
